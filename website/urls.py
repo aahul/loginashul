@@ -1,4 +1,4 @@
-"""website URL Configuration
+"""work URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.2/topics/http/urls/
@@ -15,10 +15,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from signup.views import signaction
-from login.views import loginaction
+from.import views
+from django.conf.urls.static import static
+from django.views.static import serve
+from django.conf.urls import url
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('signup/',signaction),
-    path('login/',loginaction),
+    path('',views.signup,name='signup'),
+    path('home/',views.home,name='home'),
+    path('logout/',views.logout,name='logout'),
+    path('login/',views.login,name='login'),
+    path(r'^activate/(?P<uidb64>[0-9A-Za-z_-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        views.activate, name='activate')
+    url(r'^media/(?P<path>.*)$', serve,{'document_root':       settings.MEDIA_ROOT}), 
+    url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}), 
 ]
+
